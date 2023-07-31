@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hq9FsaCj9u/8aEnxd1lVXjkzu0DZQDmhvzFJGgsxks7J4xaBQ12" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <title>Student Opportunities</title>
+</head>
+
+<body>
+    <header class="bg-primary text-white p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h1 class="display-6"><i class="fas fa-graduation-cap"></i>  Student Opportunities</h1>
+
+                </div>
+                <div class="col-md-7 text-md-end">
+                    <div class=" justify-content-between">
+                        <a href="{{url_for('login')}}" class="btn btn-light">Login</a>
+                        <a href="{{url_for('signup')}}" class="btn btn-light">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8" style="margin-top: 112px;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2
+                     class="mb-3" id="jobs" style="color: #03305f;">Available Jobs  <i class="fas fa-briefcase"></i>
+                    </h2>
+                    <div class="dropdown" style="margin-right: 25px;">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            select category
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#internships">Internships</a></li>
+                            <li><a class="dropdown-item" href="#jobs">Jobs</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="job-listings">
+                    {% for job_listing in job_listings %}
+                    <div class="card w-100">
+                        <div class="card-body" style="display: flex; align-items: center;">
+                            <!-- <div style="margin-right: 5px;">
+                                <i class="far fa-building" style="font-size: 24px;"></i>
+                            </div> -->
+                            <h4 class="card-title"><span class="text-color" style="margin-right: 5px;"> </span> <span style="color: rgb(81, 81, 81);">{{ job_listing[1] }}</span></h4>
+                            <h6><span class="text-color"><i class="fa-solid fa-user"></i>  Role: </span> <span style="color: rgb(112, 112, 112);">{{ job_listing[2] }}</span> </h6>
+                                <h6> <span class="text-color"> <i class="fas fa-map-marker-alt"></i>   Location: </span>  <span style="color: rgb(112, 112, 112);">{{ job_listing[3] }}</span></h6>
+                                <h6> <span class="text-color"><i class="fas fa-tag"></i>  Category: </span>  <span style="color: rgb(112, 112, 112);">{{ job_listing[4] }}</span></h6>
+                                  <!-- <a href="#" class="btn btn-primary">More</a> -->
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2 id="internships" style="color: #03305f;" class="mb-3">Internships  <i class="fas fa-hard-hat"></i></h2>
+                </div>
+
+                <div class="internship-listings">
+                    {% for internship_listing in internship_listings %}
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <h4 class="card-title"><span class="text-color">Company: </span> {{ internship_listing[1] }}
+                            </h4>
+                            <h6><span class="text-color">Role: </span>{{internship_listing[2] }}</h6>
+                            <h6><span class="text-color">Location: </span>{{ internship_listing[3] }}</h6>
+                            <h6><span class="text-color">Category: </span>{{internship_listing[4] }}</h6>
+                            <!-- <a href="#" class="btn btn-primary">Learn More</a> -->
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h2 class="mb-3" style="color: #03305f; text-align: center;">Submit Details</h2>
+                        <form action="/jobs" method="post" enctype="multipart/form-data">
+                            <div class="col mb-1">
+                                <input type="text" name="fname" class="form-control" placeholder="Your name"
+                                    aria-label="First name">
+                            </div>
+                            <div class="col mb-1">
+                                <select class="form-control" id="companyNameSelect" name="companyname">
+                                    <option selected> Company name </option>
+                                    {% set displayed_companies = [] %} {# Initialize an empty list to store displayed
+                                    company
+                                    names #}
+                                    {% for listing in listings %}
+                                    {% if listing[1] not in displayed_companies %} {# Check if company name is
+                                    not already displayed #}
+                                    <option value="{{ listing[1] }}">{{ listing[1] }}</option>
+                                    {% set _ = displayed_companies.append(listing[1]) %} {# Add company name to
+                                    displayed_companies list #}
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col mb-1">
+                                <select class="form-control" id="roleSelect" name="role">
+                                    <option selected> Role </option>
+                                    {% for listing in listings %}
+                                    <option class="roleOption" value="{{ listing[2] }}" data-company="{{ listing[1] }}">
+                                        {{ listing[2] }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col mb-1">
+                                <select class="form-control" id="specificSizeSelect" name="category">
+                                    <option selected> Category </option>
+                                    {% set displayed_companies = [] %} {# Initialize an empty list to store displayed
+                                    company
+                                    names #}
+                                    {% for listing in listings %}
+                                    {% if listing[4] not in displayed_companies %} {# Check if company name is
+                                    not already displayed #}
+                                    <option value="{{ listing[4] }}">{{ listing[4] }}</option>
+                                    {% set _ = displayed_companies.append(listing[4]) %} {# Add company name to
+                                    displayed_companies list #}
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col mb-1">
+                                <input type="text" name="contact" class="form-control" placeholder="Contact"
+                                    aria-label="First name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="resume" style="color: #03305f;">Upload Resume:</label>
+                                <input type="file" class="form-control-file" id="resume" name="cv"
+                                    accept=".pdf,.doc,.docx" required>
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <div class="foot">
+            <p>&copy; 2023 Student Opportunities</p>
+            <p class="lead">Connecting students with internships and job opportunities.</p>
+            <div class="footer-links">
+                <a href="/terms">Terms of Service</a> | <a href="/privacy">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Get the Role dropdown element
+        const roleSelect = document.getElementById("roleSelect");
+
+        // Get the Company Name dropdown element
+        const companyNameSelect = document.getElementById("companyNameSelect");
+
+        // Listen for the onchange event on the Company Name dropdown
+        companyNameSelect.addEventListener("change", function () {
+            const selectedCompany = this.value;
+
+            // Show only the Role options that match the selected company
+            const roleOptions = document.getElementsByClassName("roleOption");
+            for (const option of roleOptions) {
+                const dataCompany = option.getAttribute("data-company");
+                option.style.display = dataCompany === selectedCompany ? "block" : "none";
+            }
+        });
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

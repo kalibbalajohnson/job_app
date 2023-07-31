@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Company Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+        .main-content {
+            margin-top: 120px; 
+        }
+
+        .fixed-column {
+    position: fixed;
+    top: 120px; /* Adjust the top value to align with the fixed header */
+    right: 20px; /* Adjust the right value to align with the right side of the viewport */
+    width: 450px; /* Set the width of the fixed column */
+    z-index: 999; /* Ensure the fixed column appears above other elements */
+    padding: 10px; /* Add padding if needed */
+}
+
+
+    </style>
+</head>
+
+<body style="font-family: 'Times New Roman', Times, serif;">
+    <header class="bg-primary text-white p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h1 class="display-6"> {{ session['username'] }} Dashboard </h1>
+
+                </div>
+                <div class="col-md-3 text-md-end">
+                    <div class=" justify-content-between">
+                        <form action="{{ url_for('logout') }}" method="get" class="logout-btn">
+                            <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
+                            <button type="submit" class="btn btn-light mt-3">Logout</button>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main-content container">
+        
+        <div class="row">
+            <div class="col-md-6 fixed-column">
+                <div class="dashboard-card">
+                    <h3 class="card-title" style="color: #03305f; text-align: center;">Upload Opportunity</h3>
+                    <form action="{{ url_for('company') }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
+
+                        <div class="form-group">
+                            <label for="specificSizeSelect">Company Name</label>
+                            <select class="form-control" id="specificSizeSelect" name="companyname">
+                                <!-- Use Jinja to get the username of the logged-in user -->
+                                <option selected value="{{ session['username'] }}">{{ session['username'] }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role">Role:</label>
+                            <input type="text" class="form-control" id="role" name="role" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="text" class="form-control" id="location" name="location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category:</label>
+                            <input type="text" class="form-control" id="category" name="category" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+               
+            </div>
+            <div class="col-md-6">
+                <div class="dashboard-card">
+                    <h3 style="color: #03305f; text-align: center;">Listings</h3>
+                    <p style="color: rgb(81, 81, 81); ">Total Listings: {{ listings_data|length }}</p>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Role</th>
+                                <th>Location</th>
+                                <th>Category</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for listing in listings_data %}
+                            <tr>
+                                <td>{{ listing[1] }}</td>
+                                <td>{{ listing[2] }}</td>
+                                <td>{{ listing[3] }}</td>
+                                <td>{{ listing[4] }}</td>
+                                <td>
+                                    <form action="{{ url_for('delete_listing', id=listing[0]) }}" method="post">
+                                        <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="dashboard-card mt-5">
+                    <h3 style="color: #03305f; text-align: center;">CV Submissions</h3>
+                    <p style="color: rgb(81, 81, 81); ">Total Submissions: {{ cv_submissions|length }}</p>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Company Name</th>
+                                <th>Category</th>
+                                <th>Role</th>
+                                <th>Contact</th>
+                                <th>CV File</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for submission in cv_submissions %}
+                            <tr>
+                                <td>{{ submission[1] }}</td>
+                                <td>{{ submission[2] }}</td>
+                                <td>{{ submission[3] }}</td>
+                                <td>{{ submission[4] }}</td>
+                                <td>{{ submission[5] }}</td>
+                                <td><a href="{{ url_for('static', filename='files/cv/' + submission[6]) }}"> CV</a>
+                                </td>
+                                <td>
+                                    <form action="{{ url_for('delete_submission', id=submission[0]) }}" method="post">
+                                        <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
