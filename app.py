@@ -1,5 +1,5 @@
 from flask_login import current_user
-from flask import Flask, render_template, url_for, request, redirect, flash, session, g, send_from_directory
+from flask import Flask, render_template, url_for, request, redirect, flash, session, g, send_from_directory, jsonify
 import secrets
 import os
 from flask_mysqldb import MySQL
@@ -38,11 +38,11 @@ class listings(db.Model):
 
 class Submit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fname = db.Column(db.String(100), nullable=False)
+   
     companyname = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(50), nullable=False)
     role = db.Column(db.String(100), nullable=False)
-    contact = db.Column(db.String(100), nullable=False)
+    
     cv = db.Column(db.String(1000), nullable=False)
 
 
@@ -68,9 +68,9 @@ class ListingAdmin(sqla.ModelView):
 
 
 class SubmitAdmin(sqla.ModelView):
-    column_list = ('fname', 'companyname', 'category', 'role', 'contact', 'cv')
-    form_columns = ('fname', 'companyname', 'category',
-                    'role', 'contact', 'cv')
+    column_list = ('companyname', 'category', 'role','cv')
+    form_columns = ('companyname', 'category',
+                    'role')
 
 
 class UsersAdmin(sqla.ModelView):
@@ -383,11 +383,11 @@ def delete_submission(id):
 def job_list():
     if request.method == "POST":
         # Get form data
-        Fname = request.form['fname']
+        
         companyName = request.form['companyname']
         Category = request.form['category']
         Role = request.form['role']
-        Contact = request.form['contact']
+        
 
         # Get the uploaded file data
         cv = request.files['cv']  # Get the FileStorage object
@@ -398,8 +398,8 @@ def job_list():
         cv.save(file_path)
 
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO submit (fname, companyname, category, role, contact, cv) VALUES (%s, %s, %s, %s, %s, %s)",
-                    (Fname, companyName, Category, Role, Contact, filename))
+        cur.execute("INSERT INTO submit (companyname, category, role, cv) VALUES (%s, %s, %s, %s)",
+                    (companyName, Category, Role, filename))
         mysql.connection.commit()
         cur.close()
 
@@ -423,6 +423,33 @@ def job_list():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     return render_template('home.html')
+
+@app.route('/search', methods=['POST'])
+def search():
+    search_input = request.form['search_input']
+
+    # Query the database for job listings that match the search input
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM listings WHERE companyname LIKE %s OR role LIKE %s OR category LIKE %s OR location LIKE %s",
+                (f"%{search_input}%", f"%{search_input}%", f"%{search_input}%", f"%{search_input}%"))
+    job_listings = cur.fetchall()
+    cur.close()
+
+    # Convert the job listings data into a list of dictionaries
+    job_listings_data = []
+    for job in job_listings:
+        job_data = {
+            'id': job[0],
+            'companyname': job[1],
+            'role': job[2],
+            'location': job[3],
+            'category': job[4]
+        }
+        job_listings_data.append(job_data)
+
+    # Return the job listings data as JSON
+    return jsonify(job_listings_data)
+
 
 
 if __name__ == "__main__":
