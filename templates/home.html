@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #ddd;
+        }
+
+        section.hero {
+            background-image: url('../static/files/images/job.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 36px;
+        }
+
+        .hero-content {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .hero-content h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero-content a {
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px 30px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        section.services {
+            background-color: #f9f9f9;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .services p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        section.contact {
+            background-color: #ddd;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .contact p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .about img {
+            max-width: 100%;
+        }
+
+        
+ section.about {
+            background-color: #fff;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .about p {
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .about img {
+            max-width: 100%;
+        }
+
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Custom styles for the carousel controls */
+        .carousel-control-prev, .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background-color: #fff;
+            opacity: 0.8;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: transparent;
+            background-size: 100% 100%;
+            width: 25px;
+            height: 25px;
+        }
+
+        /* Optionally, you can change the color of the carousel control icons */
+        .carousel-control-prev-icon::before,
+        .carousel-control-next-icon::before {
+            content: '\2039';
+            color: #333;
+            font-size: 24px;
+        }
+
+        .carousel-control-next-icon::before {
+            content: '\203A';
+        }
+
+        /* Style for the active carousel control button */
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background-color: #fff;
+            opacity: 1;
+        }
+
+        /* Center the carousel */
+        #carouselExampleAutoplaying {
+            max-width: 880px;
+            margin: 0 auto;
+        }
+        .carousel-inner img {
+            height: 490px; /* Adjust the height as desired */
+        }
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            color: #fff;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <header class=" text-white p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h1 style="font-family: serif;" class="display-6"><i class="fas fa-graduation-cap"></i> Student
+                        Opportunities</h1>
+                </div>
+                <div class="col-md-7 justify-content-end align-items-center">
+                    <a href="{{url_for('login1')}}" class="btn btn-light me-2">Login</a>
+                    <a href="{{url_for('signup1')}}" class="btn btn-light">Create Account </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <nav>
+        <a style="margin: 25px;" href="#home">Home</a>
+        <a style="margin: 25px;" href="#about">About</a>
+        <a style="margin: 25px;" href="#services">Services</a>
+        <a style="margin: 25px;" href="#contact">Contact</a>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Discover New Opportunities</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet tristique semper. Donec eu sem
+                quis ex lacinia tincidunt. Nullam scelerisque risus vel nisi faucibus, eget scelerisque nisi blandit.
+                Sed nec velit eget tortor iaculis venenatis.
+            </p>
+            <a href="{{url_for('login1')}}" class="cta-button">View Jobs</a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <h2>About Us</h2>
+        <p>
+            Nulla bibendum erat eu dignissim placerat. Suspendisse potenti. Vivamus at auctor lectus. Proin vel
+            tincidunt lorem, quis aliquet tortor. Proin vel mi vel nisl iaculis egestas at vel augue. Cras non
+            rhoncus mauris. Aenean scelerisque blandit dolor, eu ultrices sapien ultrices id. Quisque a felis eget
+            urna sodales convallis.
+        </p>
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+            
+                <div class="carousel-item active">
+                    <img src="../static/files/images/4.jpg" class="d-block w-100" alt="Image 2">
+                    <div class="carousel-caption">
+                        <h3>Caption 2</h3>
+                        <p>This is the caption for Image 2.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../static/files/images/3.jpg" class="d-block w-100" alt="Image 3">
+                    <div class="carousel-caption">
+                        <h3>Caption 3</h3>
+                        <p>This is the caption for Image 3.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../static/files/images/2.jpg" class="d-block w-100" alt="Image 4">
+                    <div class="carousel-caption">
+                        <h3>Caption 4</h3>
+                        <p>This is the caption for Image 4.</p>
+                    </div>
+                </div>
+
+                    <div class="carousel-item ">
+                    <img src="../static/files/images/1.jpg" class="d-block w-100" alt="Image 1">
+                    <div class="carousel-caption">
+                        <h3>Caption 1</h3>
+                        <p>This is the caption for Image 1.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- carousel controls
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="prev" style="left: -130px;"></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="next" style="right: -130px;"></button> -->
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <h2>Our Services</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet tristique semper. Donec eu sem
+            quis ex lacinia tincidunt. Nullam scelerisque risus vel nisi faucibus, eget scelerisque nisi blandit.
+            Sed nec velit eget tortor iaculis venenatis.
+        </p>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet tristique semper. Donec eu sem
+            quis ex lacinia tincidunt. Nullam scelerisque risus vel nisi faucibus, eget scelerisque nisi blandit.
+            Sed nec velit eget tortor iaculis venenatis.
+        </p>
+    </section>
+
+    <footer class=" text-white text-center py-3 mt-4" style="  background-color: #333;">
+        <div class="foot">
+            <p>&copy; 2023 Student Opportunities</p>
+            <p class="lead">Connecting students with internships and job opportunities.</p>
+            <div class="footer-links">
+                <a href="/terms">Terms of Service</a> | <a href="/privacy">Privacy Policy</a>
+            </div>
+            <br>
+            <a href="{{url_for('signup')}}" class="btn btn-light">Register Company</a>
+            <a href="{{url_for('login')}}" class="btn btn-light me-2">Login for Company</a>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+    </script>

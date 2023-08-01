@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <title>Bootstrap Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body style=" background-color: #f8f9fa;">
+
+    <div class="container mt-5">
+
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card" style="border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h3 class="card-title" style="color: #03305f; text-align: center;">Login 1</h3>
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        <div class="alert alert-info">
+
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+
+                        <form action="{{ url_for('login1') }}" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
+                            <div class="form-group">
+                                <label for="fname" style="color: #03305f;">Username:</label>
+                                <input type="text" class="form-control" id="fname" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lname" style="color: #03305f;">Password:</label>
+                                <input type="password" class="form-control" id="lname" name="password" required>
+                            </div>
+                            <button style="float: right;" type="submit" class="btn btn-primary">Login</button>
+
+                            <p style="color: gray;">Have no account click to <a href="{{ url_for('signup1') }}"
+                                    class="admin-link"> create account </a></p>
+                            <p> <a href="{{ url_for('home') }}" class="admin-link"> Return Home </a></p>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

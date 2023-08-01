@@ -23,13 +23,11 @@
     z-index: 999; /* Ensure the fixed column appears above other elements */
     padding: 10px; /* Add padding if needed */
 }
-
-
     </style>
 </head>
 
 <body style="font-family: 'Times New Roman', Times, serif;">
-    <header class="bg-primary text-white p-4">
+    <header class=" text-white p-4" style=" background-color: #333;">
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
@@ -48,12 +46,14 @@
             </div>
         </div>
     </header>
+    <div id="popup-container"></div>
     <div class="main-content container">
         
         <div class="row">
             <div class="col-md-6 fixed-column">
                 <div class="dashboard-card">
                     <h3 class="card-title" style="color: #03305f; text-align: center;">Upload Opportunity</h3>
+                    
                     <form action="{{ url_for('company') }}" method="post">
                         <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
 
@@ -158,6 +158,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
 </body>
 
 </html>

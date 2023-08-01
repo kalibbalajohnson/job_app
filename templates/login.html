@@ -16,8 +16,19 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card" style="border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                    <div class="card-body" >
+                    <div class="card-body">
                         <h3 class="card-title" style="color: #03305f; text-align: center;">Login</h3>
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        <div class="alert alert-info">
+
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+
+                        </div>
+                        {% endif %}
+                        {% endwith %}
                         <form action="{{ url_for('login') }}" method="post">
                             <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
                             <div class="form-group">
@@ -30,8 +41,9 @@
                             </div>
                             <button style="float: right;" type="submit" class="btn btn-primary">Login</button>
 
-                            <p style="color: gray;">Have no account click to <a href="{{ url_for('signup') }}" class="admin-link"> create account </a></p>
-                            <p>  <a href="{{ url_for('job_list') }}" class="admin-link"> Return Home </a></p>
+                            <p style="color: gray;">Have no account click to <a href="{{ url_for('signup') }}"
+                                    class="admin-link"> create account </a></p>
+                            <p> <a href="{{ url_for('home') }}" class="admin-link"> Return Home </a></p>
                         </form>
 
                     </div>
