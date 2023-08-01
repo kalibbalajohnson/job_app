@@ -50,6 +50,7 @@ footer {
     padding: 1x;
     border-radius: 8px;
     text-align: center;
+    width: 500px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -64,6 +65,7 @@ footer {
 }
 .mb-1 {
     margin-bottom: 3px;
+  
 }
 
 .card.mb-3{
