@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -12,20 +13,46 @@
         integrity="sha384-Vkoo8x4CGsO3+Hq9FsaCj9u/8aEnxd1lVXjkzu0DZQDmhvzFJGgsxks7J4xaBQ12" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
     <title>Student Opportunities</title>
+    <style>
+        /* Pop-up container style */
+        #popup-container {
+            width: 300px;
+            position: fixed;
+            top: 20%;
+            left: 40%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        /* Pop-up content style */
+        .popup-message {
+            background-color: rgba(82, 197, 94, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .popup-content {
+            font-size: 18px;
+        }
+    </style>
 </head>
 
 <body>
-    <header class="bg-primary text-white p-4">
+    <header class=" text-white p-4" style=" background-color: #333;">
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
-                    <h1 class="display-6"><i class="fas fa-graduation-cap"></i>  Student Opportunities</h1>
+                    <a style="text-decoration: none; font-family: serif; color: white;" href="{{url_for('home')}}">
+                        <h1 class="display-6"><i class="fas fa-graduation-cap"></i> Student Opportunities</h1>
+                    </a>
 
                 </div>
                 <div class="col-md-7 text-md-end">
                     <div class=" justify-content-between">
-                        <a href="{{url_for('login')}}" class="btn btn-light">Login</a>
-                        <a href="{{url_for('signup')}}" class="btn btn-light">Sign Up</a>
+                        <!-- <h6 class="display-6"> {{ session['username'] }} </h6> -->
+                        <a href="{{ url_for('logout1') }}" class="btn btn-light mt-3">Logout</a>
+
                     </div>
                 </div>
             </div>
@@ -33,15 +60,26 @@
     </header>
 
     <div class="container mt-4">
+        <!-- {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-success">
+           
+                {% for message in messages %}
+               {{ message }}
+                {% endfor %}
+           
+        </div>
+        {% endif %}
+        {% endwith %} -->
+        <div id="popup-container"></div>
         <div class="row">
-            <div class="col-md-8" style="margin-top: 112px;">
+            <div class="col-md-8" style="margin-top: 20px;">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2
-                     class="mb-3" id="jobs" style="color: #03305f;">Available Jobs  <i class="fas fa-briefcase"></i>
+                    <h2 class="mb-3" id="jobs" style="color: #03305f;">Available Jobs <i class="fas fa-briefcase"></i>
                     </h2>
                     <div class="dropdown" style="margin-right: 25px;">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" class="btn btn-light dropdown-toggle"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             select category
                         </button>
                         <ul class="dropdown-menu">
@@ -58,29 +96,38 @@
                             <!-- <div style="margin-right: 5px;">
                                 <i class="far fa-building" style="font-size: 24px;"></i>
                             </div> -->
-                            <h4 class="card-title"><span class="text-color" style="margin-right: 5px;"> </span> <span style="color: rgb(81, 81, 81);">{{ job_listing[1] }}</span></h4>
-                            <h6><span class="text-color"><i class="fa-solid fa-user"></i>  Role: </span> <span style="color: rgb(112, 112, 112);">{{ job_listing[2] }}</span> </h6>
-                                <h6> <span class="text-color"> <i class="fas fa-map-marker-alt"></i>   Location: </span>  <span style="color: rgb(112, 112, 112);">{{ job_listing[3] }}</span></h6>
-                                <h6> <span class="text-color"><i class="fas fa-tag"></i>  Category: </span>  <span style="color: rgb(112, 112, 112);">{{ job_listing[4] }}</span></h6>
-                                  <!-- <a href="#" class="btn btn-primary">More</a> -->
+                            <h4 class="card-title"><span class="text-color" style="margin-right: 5px;"> </span> <span
+                                    style="color: rgb(81, 81, 81);">{{ job_listing[1] }}</span></h4>
+                            <h6><span class="text-color"><i class="fa-solid fa-user"></i> Role: </span> <span
+                                    style="color: rgb(112, 112, 112);">{{ job_listing[2] }}</span> </h6>
+                            <h6> <span class="text-color"> <i class="fas fa-map-marker-alt"></i> Location: </span> <span
+                                    style="color: rgb(112, 112, 112);">{{ job_listing[3] }}</span></h6>
+                            <h6> <span class="text-color"><i class="fas fa-tag"></i> Category: </span> <span
+                                    style="color: rgb(112, 112, 112);">{{ job_listing[4] }}</span></h6>
+                            <!-- <a href="#" class="btn btn-primary">More</a> -->
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-
+                <br>
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2 id="internships" style="color: #03305f;" class="mb-3">Internships  <i class="fas fa-hard-hat"></i></h2>
+                    <h2 id="internships" style="color: #03305f;" class="mb-3">Internships <i
+                            class="fas fa-hard-hat"></i></h2>
                 </div>
 
                 <div class="internship-listings">
                     {% for internship_listing in internship_listings %}
                     <div class="card w-100">
-                        <div class="card-body">
-                            <h4 class="card-title"><span class="text-color">Company: </span> {{ internship_listing[1] }}
+                        <div class="card-body" style="display: flex; align-items: center;">
+                            <h4 class="card-title"><span style="color: rgb(81, 81, 81);"> {{ internship_listing[1]
+                                    }}</span>
                             </h4>
-                            <h6><span class="text-color">Role: </span>{{internship_listing[2] }}</h6>
-                            <h6><span class="text-color">Location: </span>{{ internship_listing[3] }}</h6>
-                            <h6><span class="text-color">Category: </span>{{internship_listing[4] }}</h6>
+                            <h6><span class="text-color"> <i class="fa-solid fa-user"></i> Role: </span> <span
+                                    style="color: rgb(112, 112, 112);"> {{internship_listing[2] }}</span></h6>
+                            <h6><span class="text-color"><i class="fas fa-map-marker-alt"></i> Location: </span><span
+                                    style="color: rgb(112, 112, 112);"> {{internship_listing[3] }}</span></h6>
+                            <h6><span class="text-color"><i class="fas fa-tag"></i> Category: </span><span
+                                    style="color: rgb(112, 112, 112);"> {{internship_listing[4] }}</span></h6>
                             <!-- <a href="#" class="btn btn-primary">Learn More</a> -->
                         </div>
                     </div>
@@ -160,7 +207,7 @@
         </div>
     </div>
 
-    <footer class="bg-dark text-white text-center py-3 mt-4">
+    <footer class=" text-white text-center py-3 mt-4" style="  background-color: #333;">
         <div class="foot">
             <p>&copy; 2023 Student Opportunities</p>
             <p class="lead">Connecting students with internships and job opportunities.</p>
@@ -188,6 +235,44 @@
                 option.style.display = dataCompany === selectedCompany ? "block" : "none";
             }
         });
+        function showPopupMessage(message) {
+            // Create the pop-up container
+            const popupContainer = document.createElement('div');
+            popupContainer.classList.add('popup-message');
+
+            // Create the pop-up content
+            const popupContent = document.createElement('div');
+            popupContent.classList.add('popup-content');
+            popupContent.innerText = message;
+
+            // Append the content to the container
+            popupContainer.appendChild(popupContent);
+
+            // Append the container to the document
+            document.getElementById('popup-container').appendChild(popupContainer);
+
+            // Remove the pop-up after a few seconds (e.g., 3 seconds)
+            setTimeout(function () {
+                popupContainer.remove();
+            }, 3000);
+        }
+        // ...
+        document.addEventListener('DOMContentLoaded', function () {
+            // ...
+
+            // Add an event listener for the form submission
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                // Get the form data and submit it (you can keep this part as it is)
+                // ...
+
+                // Display the pop-up message
+                showPopupMessage('Resume submitted successfully!');
+            });
+
+            // ...
+        });
+
     </script>
 
 

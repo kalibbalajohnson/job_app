@@ -45,11 +45,18 @@ class Submit(db.Model):
     contact = db.Column(db.String(100), nullable=False)
     cv = db.Column(db.String(1000), nullable=False)
 
+
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username  = db.Column(db.String(100), nullable=False)
-    email  = db.Column(db.String(100), nullable=False)
+    username = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(100), nullable=False)
+
+class Students(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)    
 
 
 admin = Admin(app, name='Admin', template_mode='bootstrap3')
@@ -64,21 +71,29 @@ class SubmitAdmin(sqla.ModelView):
     column_list = ('fname', 'companyname', 'category', 'role', 'contact', 'cv')
     form_columns = ('fname', 'companyname', 'category',
                     'role', 'contact', 'cv')
-    
+
+
 class UsersAdmin(sqla.ModelView):
-    column_list = ('username', 'email' )
-    form_columns = ('username', 'email')   
+    column_list = ('username', 'email')
+    form_columns = ('username', 'email')
+
+class StudentsAdmin(sqla.ModelView):
+    column_list = ('username', 'email')
+    form_columns = ('username', 'email')
 
 
 # Connect Flask-Admin to app's MySQL database
 admin.add_view(ListingAdmin(listings, db.session,
-               name='Opportunities', endpoint='listings'))
+               name='Opportunities'))
 
 admin.add_view(SubmitAdmin(Submit, db.session,
-               name='CV submissions', endpoint='submit'))
+               name='CV submissions' ))
 
 admin.add_view(UsersAdmin(Users, db.session,
-               name='Companies', endpoint='users'))
+               name='Companies'))
+
+admin.add_view(StudentsAdmin(Students, db.session,
+               name='Students'))
 
 for rule in app.url_map.iter_rules():
     print(rule.endpoint)
@@ -86,6 +101,7 @@ for rule in app.url_map.iter_rules():
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+
 
 
 class User(UserMixin):
@@ -104,11 +120,32 @@ class User(UserMixin):
             return User(user_data[0])
         else:
             return None
+        
+class User1(UserMixin):
+    def __init__(self, user_id1):
+        self.id = user_id1
+
+    @staticmethod
+    def get(user_id1):
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM students WHERE id = %s", (user_id1,))
+        user_data1 = cur.fetchone()
+        cur.close()
+
+        if user_data1:
+            # Create a new User instance with the found user_id
+            return User1(user_data1[0])
+        else:
+            return None
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
+
+@login_manager.user_loader
+def load_user1(user_id1):
+    return User1.get(user_id1)
 
 
 @app.before_request
@@ -147,8 +184,37 @@ def signup():
     return render_template('signup.html')
 
 
+@app.route('/signup1', methods=['GET', 'POST'])
+def signup1():
+    if request.method == "POST":
+        details = request.form
+        Username = details['username']
+        Password = details['password']
+        email = details['email']
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM students WHERE username = %s",
+                    (Username,))
+        user_data = cur.fetchone()
+
+        if user_data:
+            # Username already exists, redirect to a page showing error or handle accordingly
+            flash('Username already exists!', 'error')
+            return redirect(url_for('signup1'))
+
+        # If username does not exist, insert the data
+        cur.execute("INSERT INTO students(username, email, password) VALUES (%s, %s, %s)",
+                    (Username, email, Password))
+        mysql.connection.commit()
+        cur.close()
+        flash('User successfully registered!', 'success')
+        return redirect(url_for('login1'))
+
+    return render_template('signup1.html')
+
+
 @app.route('/company', methods=['GET', 'POST'])
-@login_required
+
 def company():
     if request.method == "POST":
         details = request.form
@@ -165,7 +231,8 @@ def company():
 
     # Fetch all CV submissions from the 'Submit' table for the current user's companyname
     cur = mysql.connection.cursor()
-    username = session.get('username')  # Retrieve the logged-in user's username from the session
+    # Retrieve the logged-in user's username from the session
+    username = session.get('username')
     cur.execute("SELECT * FROM submit WHERE companyname = %s", (username,))
     cv_submissions = cur.fetchall()
 
@@ -176,6 +243,7 @@ def company():
     cur.close()
 
     return render_template('company.html', cv_submissions=cv_submissions, listings_data=listings_data)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -208,6 +276,35 @@ def login():
     return render_template('login.html')
 
 
+
+
+@app.route('/login1', methods=['GET', 'POST'])
+def login1():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # If login is successful, store the username in the session
+        session['username'] = username
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM students WHERE username = %s", (username,))
+        user_data1 = cur.fetchone()
+        cur.close()
+        
+        if user_data1 and user_data1[3] == password:
+            user = User1(user_data1[0])
+            login_user(user)
+            flash('Logged in successfully!', 'success')
+            return redirect(url_for('job_list'))
+        
+        else:
+            flash('Invalid username or password', 'error')
+            return redirect(url_for('login1'))
+
+    return render_template('login1.html')
+
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -216,6 +313,13 @@ def logout():
     flash('Logged out successfully!', 'success')
     return redirect(url_for('login'))
 
+@app.route('/logout1')
+@login_required
+def logout1():
+    logout_user()
+    session.pop('username', None)  # Clear the 'username' from the session
+    flash('Logged out successfully!', 'success')
+    return redirect(url_for('login1'))
 
 @app.route('/admin1', methods=['GET', 'POST'])
 @login_required
@@ -275,6 +379,7 @@ def delete_submission(id):
 
 
 @app.route('/jobs', methods=['GET', 'POST'])
+@login_required
 def job_list():
     if request.method == "POST":
         # Get form data
@@ -298,6 +403,8 @@ def job_list():
         mysql.connection.commit()
         cur.close()
 
+        flash('Resume submitted successfully!', 'success')
+
         return redirect(url_for('job_list'))
 
     # Fetch all data related to job listings, internship listings, and all listings
@@ -313,6 +420,10 @@ def job_list():
     return render_template('job.html', job_listings=job_listings, internship_listings=internship_listings, listings=listings)
 
 
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    return render_template('home.html')
+
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)

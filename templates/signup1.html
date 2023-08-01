@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <title>Bootstrap Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Pop-up container style */
+        #popup-container {
+            width: 300px;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        /* Pop-up content style */
+        .popup-message {
+            background-color: rgba(82, 197, 94, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .popup-content {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body style=" background-color: #f8f9fa;">
+    <div class="container mt-5">
+        <div id="popup-container"></div>
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card" style="border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h3 class="card-title text-center" style="color: #03305f;"> Create Account</h3>
+                        <br>
+                     
+                        <form action="/signup1" method="post">
+                            <div class="form-group">
+                                <label for="lname" style="color: #03305f;">Username: </label>
+                                <input type="text" class="form-control" id="lname" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lname" style="color: #03305f;">Email Address: </label>
+                                <input type="text" class="form-control" id="lname" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lname" style="color: #03305f;">Password: </label>
+                                <input type="password" class="form-control" id="lname" name="password" required>
+                            </div>
+                            <div class="d-flex" style="float: right;">
+                                <button type="submit" class="btn btn-primary"> Create </button>
+                            </div>
+
+                            <p style="color: gray;">Already have an account <a href="{{ url_for('login1') }}"
+                                    class="admin-link"> click to login </a></p>
+                            <p> <a href="{{ url_for('job_list') }}" class="admin-link"> Return Home</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+        <script> function showPopupMessage(message) {
+            // Create the pop-up container
+            const popupContainer = document.createElement('div');
+            popupContainer.classList.add('popup-message');
+
+            // Create the pop-up content
+            const popupContent = document.createElement('div');
+            popupContent.classList.add('popup-content');
+            popupContent.innerText = message;
+
+            // Append the content to the container
+            popupContainer.appendChild(popupContent);
+
+            // Append the container to the document
+            document.getElementById('popup-container').appendChild(popupContainer);
+
+            // Remove the pop-up after a few seconds (e.g., 3 seconds)
+            setTimeout(function () {
+                popupContainer.remove();
+            }, 3000);
+        }
+        // ...
+        document.addEventListener('DOMContentLoaded', function () {
+            // ...
+
+            // Add an event listener for the form submission
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+
+                // Get the form data and submit it (you can keep this part as it is)
+                // ...
+
+                // Display the pop-up message
+                showPopupMessage('Account created successfully!');
+            });
+
+            // ...
+        });</script>
+</body>
+
+</html>
