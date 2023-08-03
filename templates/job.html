@@ -132,7 +132,7 @@
                                     class="card mb-3">
                                     <div class="card-body">
                                         <h5 class="mb-3" style="color: #03305f; text-align: center;">Submit Details</h5>
-                                        <form action="/jobs" method="post" enctype="multipart/form-data">
+                                        <form  onsubmit="" action="/jobs" method="post" enctype="multipart/form-data" id="sub">
                                             <!-- <div class="col mb-1">
                                                 <input type="text" name="fname" class="form-control"
                                                     placeholder="Your name" aria-label="First name">
@@ -482,38 +482,6 @@
     </script>
 
 
-    <script>
-        $(document).ready(function () {
-            // Function to close all collapse buttons except the one clicked
-            function closeOtherCollapses(clickedCollapse) {
-                const allCollapses = document.querySelectorAll(".collapse");
-                allCollapses.forEach((collapse) => {
-                    if (collapse !== clickedCollapse && collapse.classList.contains("show")) {
-                        $(collapse).collapse("hide");
-                    }
-                });
-            }
-
-            // Add an event listener to the parent element to handle dynamic buttons
-            $(".job-listings").on("click", ".btn-primary", function () {
-                // Get the card elements
-                const card = $(this).closest(".card");
-                const companyName = card.find(".company-name").text().trim();
-                const role = card.find(".role").text().trim();
-                const category = card.find(".category").text().trim();
-
-                // Set the values in the form fields
-                $("#companyNameSelect").val(companyName);
-                $("#roleSelect").val(role);
-                $("#specificSizeSelect").val(category);
-
-                // Close other collapses
-                closeOtherCollapses(card.find(".collapse")[0]);
-            });
-        });
-    </script>
-
-
 
 
     <script>
@@ -575,6 +543,26 @@
 
     </script>
 
+<script>
+    $(document).ready(function () {
+        // Function to close all collapse buttons except the one clicked
+        function closeOtherCollapses(clickedCollapse) {
+            const allCollapses = document.querySelectorAll(".collapse");
+            allCollapses.forEach((collapse) => {
+                if (collapse !== clickedCollapse && collapse.classList.contains("show")) {
+                    $(collapse).collapse("hide");
+                }
+            });
+        }
+
+        // Add an event listener to the parent element to handle dynamic buttons
+        $(".job-listings").on("click", ".btn-primary", function () {
+            // Close other collapses
+            closeOtherCollapses($(this).closest(".card").find(".collapse")[0]);
+        });
+    });
+</script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
@@ -584,3 +572,34 @@
 </body>
 
 </html>
+
+<!-- <script>
+        $(document).ready(function () {
+            // Function to close all collapse buttons except the one clicked
+            function closeOtherCollapses(clickedCollapse) {
+                const allCollapses = document.querySelectorAll(".collapse");
+                allCollapses.forEach((collapse) => {
+                    if (collapse !== clickedCollapse && collapse.classList.contains("show")) {
+                        $(collapse).collapse("hide");
+                    }
+                });
+            }
+       
+            // Add an event listener to the parent element to handle dynamic buttons
+            $(".job-listings").on("click", ".btn-primary", function () {
+                // Get the card elements
+                const card = $(this).closest(".card");
+                const companyName = card.find(".company-name").text().trim();
+                const role = card.find(".role").text().trim();
+                const category = card.find(".category").text().trim();
+
+                // Set the values in the form fields
+                $("#companyNameSelect").val(companyName);
+                $("#roleSelect").val(role);
+                $("#specificSizeSelect").val(category);
+
+                // Close other collapses
+                closeOtherCollapses(card.find(".collapse")[0]);
+            });
+        });
+    </script> -->
