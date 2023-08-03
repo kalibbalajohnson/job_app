@@ -1,1 +1,1 @@
-# Job listing flask app
+# Job listing flask application
