@@ -2,4 +2,103 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .dashboard-heading {
+            font-size: 28px;
+            font-weight: bold;
+            color: #03305f;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card p {
+            font-size: 18px;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .admin-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        .logout-btn {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="dashboard-card">
+                    <div class="dashboard-heading"> Welcome to the Admin Dashboard </div>
+                </div>
+                
+                <a href="{{ url_for('listings.index_view') }}" class="admin-link"> Go to Tables </a>
+                <br>
+                <form action="{{ url_for('logout') }}" method="get" class="logout-btn">
+                    <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+
+            </div>
+            <div class="col-md-5">
+                <div class="dashboard-card">
+                    <p style="color: rgb(112, 112, 112);">Total Number of Opportunities: {{ num_internships + num_jobs }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <p style="color: rgb(112, 112, 112);">Number of Internships: {{ num_internships }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <p style="color: rgb(112, 112, 112);">Number of Jobs: {{ num_jobs }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <p style="color: rgb(112, 112, 112);">Number of CV Submissions: {{ num_cv_submissions }}</p>
+                </div>
+                <div class="dashboard-card">
+                    <p style="color: rgb(112, 112, 112);">Number of Registered Companies: {{ num_users - 1 }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
    
