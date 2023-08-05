@@ -13,28 +13,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hq9FsaCj9u/8aEnxd1lVXjkzu0DZQDmhvzFJGgsxks7J4xaBQ12" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <!-- Add this in your <head> section -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
     <title>Student Opportunities</title>
     <style>
-        /* Pop-up container style */
-        #popup-container {
-            width: 300px;
-            position: fixed;
-            top: 20%;
-            left: 40%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
+        .card {
+            transition: transform 0.1s ease-out;
         }
-
-        /* Pop-up content style */
-        .popup-message {
-            background-color: rgba(82, 197, 94, 0.8);
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-        }
-
-        .popup-content {
-            font-size: 18px;
+    
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px) scale(1.04);
         }
     </style>
 </head>
@@ -70,14 +61,14 @@
 
 
     <div class="container mt-4">
-        <div id="popup-container"></div>
+
         <div class="row">
             <div class="col-md-10" style="margin-top: 20px;">
                 <div id="top" class="d-flex justify-content-between align-items-center">
                     <h2 class="mb-3" id="jobs" style="color: #03305f;">Available Jobs <i class="fas fa-briefcase"></i>
                     </h2>
                     <div class="dropdown" style="margin-right: 25px;">
-                        <button style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" class="btn btn-light dropdown-toggle"
+                        <button style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" class="btn btn-dark dropdown-toggle"
                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             select category
                         </button>
@@ -132,7 +123,7 @@
                                     class="card mb-3">
                                     <div class="card-body">
                                         <h5 class="mb-3" style="color: #03305f; text-align: center;">Submit Details</h5>
-                                        <form  onsubmit="" action="/jobs" method="post" enctype="multipart/form-data" id="sub">
+                                        <form action="/jobs" method="post" enctype="multipart/form-data" id="sub">
                                             <!-- <div class="col mb-1">
                                                 <input type="text" name="fname" class="form-control"
                                                     placeholder="Your name" aria-label="First name">
@@ -211,7 +202,7 @@
                                             </div>
 
 
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
                                         </form>
                                     </div>
                                 </div>
@@ -231,18 +222,134 @@
                     <div class="internship-listings">
                         {% for internship_listing in internship_listings %}
                         <div class="card w-100">
-                            <div class="card-body" style="display: flex; align-items: center;">
-                                <h4 class="card-title"><span style="color: rgb(81, 81, 81);"> {{ internship_listing[1]
-                                        }}</span></h4>
-                                <h6><span class="text-color"> <i class="fa-solid fa-user"></i> Role: </span> <span
-                                        style="color: rgb(112, 112, 112);"> {{internship_listing[2] }}</span></h6>
-                                <h6><span class="text-color"><i class="fas fa-map-marker-alt"></i> Location:
-                                    </span><span style="color: rgb(112, 112, 112);"> {{internship_listing[3] }}</span>
-                                </h6>
-                                <h6><span class="text-color"><i class="fas fa-tag"></i> Category: </span><span
-                                        style="color: rgb(112, 112, 112);"> {{internship_listing[4] }}</span></h6>
-                                <!-- <a href="#" class="btn btn-primary">Learn More</a> -->
+                            <div class="card-body"
+                                style="display: flex; flex-direction: column; align-items: flex-start;">
+                                <div
+                                    style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                    <div>
+
+                                        <h4 class="card-title"><span
+                                                style="color: rgb(81, 81, 81); margin-left: 120px;"> {{
+                                                internship_listing[1]
+                                                }}</span></h4>
+                                        <br>
+                                        <div style="display: flex;">
+                                            <h6 style="margin-left: 110px;"><span class="text-color"> <i
+                                                        class="fa-solid fa-user"></i> Role: </span> <span
+                                                    style="color: rgb(112, 112, 112);"> {{internship_listing[2]
+                                                    }}</span>
+                                            </h6>
+                                            <h6 style="margin-left: 50px;"><span class="text-color"><i
+                                                        class="fas fa-map-marker-alt"></i> Location:
+                                                </span><span style="color: rgb(112, 112, 112);"> {{internship_listing[3]
+                                                    }}</span>
+                                            </h6>
+                                            <h6 style="margin-left: 50px;"><span class="text-color"><i
+                                                        class="fas fa-tag"></i> Category: </span><span
+                                                    style="color: rgb(112, 112, 112);"> {{internship_listing[4]
+                                                    }}</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Button is placed at the end of the flex container -->
+                                <button class="btn btn-primary mt-3" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExample{{ loop.index }}" aria-expanded="false"
+                                    aria-controls="collapseExample{{ loop.index }}">
+                                    Apply
+                                </button>
+                                <div class="collapse mt-3" id="collapseExample{{ loop.index }}">
+                                    <div style="height: fit-content; width: 850px;  background-color: #f8f9fa;"
+                                        class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="mb-3" style="color: #03305f; text-align: center;">Submit Details
+                                            </h5>
+                                            <form action="/jobs" method="post" enctype="multipart/form-data" id="sub">
+        
+                                                <div style="display: flex;">
+                                                    <div class="col mb-1">
+                                                        <select class="form-control" id="companyNameSelect"
+                                                            name="companyname">
+                                                            <option selected> Company name </option>
+                                                            {% set displayed_companies = [] %} {# Initialize an empty
+                                                            list
+                                                            to
+                                                            store displayed
+                                                            company
+                                                            names #}
+                                                            {% for listing in listings %}
+                                                            {% if listing[1] not in displayed_companies %} {# Check if
+                                                            company
+                                                            name is
+                                                            not already displayed #}
+                                                            <option value="{{ listing[1] }}">{{ listing[1] }}</option>
+                                                            {% set _ = displayed_companies.append(listing[1]) %} {# Add
+                                                            company
+                                                            name to
+                                                            displayed_companies list #}
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <div class="col mb-1">
+                                                        <select class="form-control" id="roleSelect" name="role">
+                                                            <option selected> Role </option>
+                                                            {% for listing in listings %}
+                                                            <option class="roleOption" value="{{ listing[2] }}"
+                                                                data-company="{{ listing[1] }}">
+                                                                {{ listing[2] }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col mb-1">
+                                                        <select class="form-control" id="specificSizeSelect"
+                                                            name="category">
+                                                            <option selected> Category </option>
+                                                            {% set displayed_companies = [] %} {# Initialize an empty
+                                                            list
+                                                            to
+                                                            store displayed
+                                                            company
+                                                            names #}
+                                                            {% for listing in listings %}
+                                                            {% if listing[4] not in displayed_companies %} {# Check if
+                                                            company
+                                                            name is
+                                                            not already displayed #}
+                                                            <option value="{{ listing[4] }}">{{ listing[4] }}</option>
+                                                            {% set _ = displayed_companies.append(listing[4]) %} {# Add
+                                                            company
+                                                            name to
+                                                            displayed_companies list #}
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                    <!-- <div class="col mb-1">
+                        <input type="text" name="contact" class="form-control"
+                            placeholder="Contact" aria-label="First name">
+                    </div> -->
+                                                </div>
+                                                <br>
+                                                <div class="form-group row">
+                                                    <label for="resume" class="col-sm-2 col-form-label"
+                                                        style="color: #03305f;">Resume:</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="file" class="form-control-file" id="resume"
+                                                            name="cv" accept=".pdf,.doc,.docx" required>
+                                                    </div>
+                                                </div>
+
+
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                         {% endfor %}
                     </div>
@@ -401,7 +508,7 @@
             cardInnerBody.classList.add('card-body');
             cardInnerBody.innerHTML = `
                 <h5 class="mb-3" style="color: #03305f; text-align: center;">Submit Details</h5>
-                <form action="/jobs" method="post" enctype="multipart/form-data">
+                <form action="/jobs" method="post" enctype="multipart/form-data" id="sub">
                     <div style="display: flex;">
                         <div class="col mb-1">
                             <select class="form-control" id="companyNameSelect" name="companyname" required>
@@ -467,10 +574,10 @@
             internshipsSection.style.display = 'none';
 
             // Hide the contents of the 'top' element
-        const topElement = document.getElementById('top');
-        topElement.innerHTML = '';
+            const topElement = document.getElementById('top');
+            topElement.innerHTML = '';
 
-            
+
         }
 
         // Add an event listener to the search form to handle form submission
@@ -502,72 +609,65 @@
                 option.style.display = dataCompany === selectedCompany ? "block" : "none";
             }
         });
-
-        function showPopupMessage(message) {
-            // Create the pop-up container
-            const popupContainer = document.createElement('div');
-            popupContainer.classList.add('popup-message');
-
-            // Create the pop-up content
-            const popupContent = document.createElement('div');
-            popupContent.classList.add('popup-content');
-            popupContent.innerText = message;
-
-            // Append the content to the container
-            popupContainer.appendChild(popupContent);
-
-            // Append the container to the document
-            document.getElementById('popup-container').appendChild(popupContainer);
-
-            // Remove the pop-up after a few seconds (e.g., 3 seconds)
-            setTimeout(function () {
-                popupContainer.remove();
-            }, 3000);
-        }
-        // ...
-        document.addEventListener('DOMContentLoaded', function () {
-            // ...
-
-            // Add an event listener for the form submission
-            const form = document.querySelector('form');
-            form.addEventListener('submit', function (event) {
-                // Get the form data and submit it (you can keep this part as it is)
-                // ...
-
-                // Display the pop-up message
-                showPopupMessage('Resume submitted successfully!');
-            });
-
-            // ...
-        });
-
     </script>
 
-<script>
-    $(document).ready(function () {
-        // Function to close all collapse buttons except the one clicked
-        function closeOtherCollapses(clickedCollapse) {
-            const allCollapses = document.querySelectorAll(".collapse");
-            allCollapses.forEach((collapse) => {
-                if (collapse !== clickedCollapse && collapse.classList.contains("show")) {
-                    $(collapse).collapse("hide");
-                }
-            });
-        }
 
-        // Add an event listener to the parent element to handle dynamic buttons
-        $(".job-listings").on("click", ".btn-primary", function () {
-            // Close other collapses
-            closeOtherCollapses($(this).closest(".card").find(".collapse")[0]);
-        });
+<script>
+  // Add an event listener to the submit button
+  document.getElementById('submitButton').addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    // Show the SweetAlert2 confirmation popup
+    Swal.fire({
+      title: 'Upload Resume?',
+      text: 'Are you sure you want to upload Resume?',
+      icon:  'success',
+      showCancelButton: true,
+      confirmButtonText: ' Comfirm ',
+      cancelButtonText: ' Cancel ',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // If the user confirms, submit the form
+        document.getElementById('sub').submit();
+      }
     });
+  });
 </script>
+
+
+
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            // Function to close all collapse buttons except the one clicked
+            function closeOtherCollapses(clickedCollapse) {
+                const allCollapses = document.querySelectorAll(".collapse");
+                allCollapses.forEach((collapse) => {
+                    if (collapse !== clickedCollapse && collapse.classList.contains("show")) {
+                        $(collapse).collapse("hide");
+                    }
+                });
+            }
+
+            // Add an event listener to the parent element to handle dynamic buttons
+            $(".job-listings").on("click", ".btn-primary", function () {
+                // Close other collapses
+                closeOtherCollapses($(this).closest(".card").find(".collapse")[0]);
+            });
+        });
+    </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="sweetalert2.all.min.js"></script>
 
 </body>
 
