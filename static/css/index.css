@@ -38,7 +38,7 @@ footer {
 }
 
 .foot{
-    margin-right: 400px;
+    /* margin-right: 400px; */
 }
 
 .card.mb-3 {
@@ -56,11 +56,11 @@ footer {
 }
 
 .col-md-4 {
-    position: fixed;
-    top:115px; 
-    right: 20px; 
+    /* position: fixed; */
+    top:90px; 
+    right: 10px; 
     width: 400px; 
-    z-index: 999; 
+    /* z-index: 999;  */
     padding: 10px; 
 }
 .mb-1 {
