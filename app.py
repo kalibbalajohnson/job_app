@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from collections import Counter
 
 from flask_admin import Admin,  AdminIndexView
 from flask_admin.contrib import sqla
@@ -357,7 +358,20 @@ def admin1():
 
     cur.close()
 
-    return render_template('admin1.html', num_internships=num_internships, num_jobs=num_jobs, num_cv_submissions=num_cv_submissions, num_users=num_users)
+    # Fetch all CV submissions from the 'submit' table
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM submit")
+    all_cv_submissions = cur.fetchall()
+    cur.close()
+
+    # Count the number of submissions for each company using Counter
+    company_counts = Counter(submission[1] for submission in all_cv_submissions)
+
+    # Get the top 5 companies with the most CV submissions
+    num_companies = 5
+    recommended_companies = company_counts.most_common(num_companies)
+
+    return render_template('admin1.html', num_internships=num_internships, num_jobs=num_jobs, num_cv_submissions=num_cv_submissions, num_users=num_users, recommended_companies=recommended_companies)
 
 
 @app.route('/delete/listing<int:id>', methods=['POST'])

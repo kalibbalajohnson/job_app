@@ -2,30 +2,40 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Company Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
    
+<body style="background-color: #f8f9fa; margin-top: -100px;">
 
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6">
-                <div class="dashboard-card">
-                    <div class="dashboard-heading"> Welcome to the Admin Dashboard </div>
+                <div class="card mb-3" style="height: fit-content;">
+                    <div class="card-body">
+                        <h4 class="card-title dashboard-heading">Welcome to the Admin Dashboard</h4>
+                    </div>
                 </div>
-                
-                <a href="{{ url_for('listings.index_view') }}" class="admin-link"> Go to Tables </a>
+
+                <a href="{{ url_for('listings.index_view') }}" class="admin-link">Go to Tables</a>
+                <br>
                 <br>
                 <div class="card mb-3" style="height: fit-content;">
                     <div class="card-body">
-                        <h4 class="mb-3" style="color: #03305f; text-align: center;">Companies receiving the most cv submissions</h4>
+                        <h4 class="mb-3" style="color: #03305f; text-align: center;">Companies with the most cv submissions</h4>
                       
                         <div class="container mt-4">
-                            
                             <ul>
                                 {% for company, submission_count in recommended_companies %}
                                     <li style="color: rgb(112, 112, 112);">{{ company }} (Submissions: {{ submission_count }})</li>
                                 {% endfor %}
                             </ul>
                         </div>
-
                     </div>
                 </div>
 
@@ -33,32 +43,44 @@
                     <input type="hidden" name="csrf_token" value="{{ g.csrf_token }}">
                     <button type="submit" class="btn btn-primary">Logout</button>
                 </form>
-
             </div>
-            <div class="col-md-5">
-                <div class="dashboard-card">
-                    <p style="color: rgb(112, 112, 112);">Total Number of Opportunities: {{ num_internships + num_jobs }}</p>
+
+            <div class="col-md-5" style="height: fit-content;">
+                <div class="card mb-3" style="height: fit-content;">
+                    <div class="card-body">
+                        <p class="card-text" style="color: rgb(112, 112, 112);">Total Number of Opportunities: {{ num_internships + num_jobs }}</p>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <p style="color: rgb(112, 112, 112);">Number of Internships: {{ num_internships }}</p>
+
+                <div class="card mb-3" style="height: fit-content;">
+                    <div class="card-body">
+                        <p class="card-text" style="color: rgb(112, 112, 112);">Number of Internships: {{ num_internships }}</p>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <p style="color: rgb(112, 112, 112);">Number of Jobs: {{ num_jobs }}</p>
+
+                <div class="card mb-3" style="height: fit-content;">
+                    <div class="card-body">
+                        <p class="card-text" style="color: rgb(112, 112, 112);">Number of Jobs: {{ num_jobs }}</p>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <p style="color: rgb(112, 112, 112);">Number of CV Submissions: {{ num_cv_submissions }}</p>
+
+                <div class="card mb-3" style="height: fit-content;">
+                    <div class="card-body">
+                        <p class="card-text" style="color: rgb(112, 112, 112);">Number of CV Submissions: {{ num_cv_submissions }}</p>
+                    </div>
                 </div>
-                <div class="dashboard-card">
-                    <p style="color: rgb(112, 112, 112);">Number of Registered Companies: {{ num_users - 1 }}</p>
+
+                <div class="card mb-3" style="height: fit-content;">
+                    <div class="card-body">
+                        <p class="card-text" style="color: rgb(112, 112, 112);">Number of Registered Companies: {{ num_users - 1 }}</p>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
