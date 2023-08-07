@@ -33,36 +33,36 @@
     </style>
 </head>
 
-<body style=" background-color: #f8f9fa;">
+<body style=" background-color: #f8f9fa; background-image: url('../static/files/images/sky2-min.jpg'); background-size: cover; background-position: center center;  background-repeat: no-repeat; ">
     <div class="container mt-5">
         <div id="popup-container"></div>
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <div class="card" style="border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <div class="card" style="border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); background-color: rgba(255, 255, 255, 0.1);">
                     <div class="card-body">
                         <h3 class="card-title text-center" style="color: #03305f;"> Create Account</h3>
                         <br>
                      
                         <form action="/signup1" method="post">
                             <div class="form-group">
-                                <label for="lname" style="color: #03305f;">Username: </label>
+                                <h6 for="lname" style="color: #03305f;">Username: </h6>
                                 <input type="text" class="form-control" id="lname" name="username" required>
                             </div>
                             <div class="form-group">
-                                <label for="lname" style="color: #03305f;">Email Address: </label>
+                                <h6 for="lname" style="color: #03305f;">Email Address: </h6>
                                 <input type="text" class="form-control" id="lname" name="email" required>
                             </div>
                             <div class="form-group">
-                                <label for="lname" style="color: #03305f;">Password: </label>
+                                <h6 for="lname" style="color: #03305f;">Password: </h6>
                                 <input type="password" class="form-control" id="lname" name="password" required>
                             </div>
                             <div class="d-flex" style="float: right;">
                                 <button type="submit" class="btn btn-primary"> Create </button>
                             </div>
 
-                            <p style="color: gray;">Already have an account <a href="{{ url_for('login1') }}"
-                                    class="admin-link"> click to login </a></p>
-                            <p> <a href="{{ url_for('job_list') }}" class="admin-link"> Return Home</a></p>
+                            <h6 style="color: gray;">Already have an account <a href="{{ url_for('login1') }}"
+                                    class="admin-link"> click to login </a></h6>
+                            <h6> <a href="{{ url_for('job_list') }}" class="admin-link"> Return Home</a></h6>
                         </form>
                     </div>
                 </div>
