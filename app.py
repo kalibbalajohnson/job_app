@@ -1,7 +1,7 @@
 from flask_login import current_user
 from flask import Flask, render_template, url_for, request, redirect, flash, session, g, send_from_directory, jsonify
 import secrets
-import 
+import os
 from flask_mysqldb import MySQL
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
