@@ -50,12 +50,24 @@
             </div>
         </div>
     </header>
+    
     <div id="popup-container"></div>
-    <div class="main-content container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-info">
 
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+
+    </div>
+    {% endif %}
+    {% endwith %}
+    <div class="main-content container">
+       
         <div class="row">
             <div class="col-md-6 fixed-column">
-                <div class="dashboard-card">
+                <div class="dashboard-card" style="margin-top: 50px;">
                     <h3 class="card-title" style="color: #03305f; text-align: center;">Upload Opportunity</h3>
 
                     <form action="{{ url_for('company') }}" method="post">
