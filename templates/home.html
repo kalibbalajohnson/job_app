@@ -118,8 +118,8 @@
             max-width: 100%;
         }
 
-        
- section.about {
+
+        section.about {
             background-color: #fff;
             padding: 60px 20px;
             text-align: center;
@@ -150,7 +150,8 @@
         }
 
         /* Custom styles for the carousel controls */
-        .carousel-control-prev, .carousel-control-next {
+        .carousel-control-prev,
+        .carousel-control-next {
             width: 50px;
             height: 50px;
             background-color: #fff;
@@ -189,15 +190,17 @@
             max-width: 880px;
             margin: 0 auto;
         }
+
         .carousel-inner img {
-            height: 490px; /* Adjust the height as desired */
+            height: 490px;
+            /* Adjust the height as desired */
         }
+
         .carousel-caption {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 10px;
             color: #fff;
         }
-       
     </style>
 </head>
 
@@ -209,9 +212,31 @@
                     <h1 style="font-family: serif;" class="display-6"><i class="fas fa-graduation-cap"></i> Student
                         Opportunities</h1>
                 </div>
-                <div class="col-md-7 justify-content-end align-items-center">
-                    <a href="{{url_for('login1')}}" class="btn btn-light me-2">Login</a>
-                    <a href="{{url_for('signup1')}}" class="btn btn-light">Create Account </a>
+                <div style="display: flex; margin-left: 450px;">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            signup
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{url_for('signup1')}}">Student</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('signup')}}">Organization</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="dropdown" style="margin-left: 40px;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            login
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{url_for('login1')}}">Student</a></li>
+                            <li><a class="dropdown-item" href="{{url_for('login')}}">Organization</a></li>
+
+                        </ul>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -229,9 +254,13 @@
         <div class="hero-content">
             <h2>Discover New Opportunities</h2>
             <p>
-                Welcome to Student Opportunities, a platform designed to bridge the gap between students and valuable career prospects.
-                 We understand the journey you're on and the importance of finding meaningful opportunities that align with your aspirations. 
-                 Our mission is to provide you with a curated selection of internships and job openings, empowering you to take the first steps towards a successful future. Explore, apply, and embark on a journey of growth with us.
+                Welcome to Student Opportunities, a platform designed to bridge the gap between students and valuable
+                career prospects.
+                We understand the journey you're on and the importance of finding meaningful opportunities that align
+                with your aspirations.
+                Our mission is to provide you with a curated selection of internships and job openings, empowering you
+                to take the first steps towards a successful future. Explore, apply, and embark on a journey of growth
+                with us.
             </p>
             <a href="{{url_for('login1')}}" class="cta-button">View Jobs</a>
         </div>
@@ -240,13 +269,16 @@
     <section class="about" id="about">
         <h2>About Us</h2>
         <p>
-            At Student Opportunities, we believe in empowering students to thrive in the competitive landscape of career growth. Our dynamic platform creates an environment where your ambitions can flourish. 
-            With unwavering support and curated opportunities, you'll be able to unlock your potential and embark on a journey towards a rewarding career. 
-            We understand the value of hands-on experiences, and our platform is your gateway to internships and job openings that align with your goals.
+            At Student Opportunities, we believe in empowering students to thrive in the competitive landscape of career
+            growth. Our dynamic platform creates an environment where your ambitions can flourish.
+            With unwavering support and curated opportunities, you'll be able to unlock your potential and embark on a
+            journey towards a rewarding career.
+            We understand the value of hands-on experiences, and our platform is your gateway to internships and job
+            openings that align with your goals.
         </p>
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
             <div class="carousel-inner">
-            
+
                 <div class="carousel-item active">
                     <img src="../static/files/images/4-min.jpg" class="d-block w-100" alt="Image 2">
                     <div class="carousel-caption">
@@ -261,15 +293,8 @@
                         <p>This is the caption for Image 3.</p>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="../static/files/images/2.jpg" class="d-block w-100" alt="Image 4">
-                    <div class="carousel-caption">
-                        <h3>Caption 4</h3>
-                        <p>This is the caption for Image 4.</p>
-                    </div>
-                </div>
-              
-                    <div class="carousel-item ">
+
+                <div class="carousel-item ">
                     <img src="../static/files/images/1-min.jpg" class="d-block w-100" alt="Image 1">
                     <div class="carousel-caption">
                         <h3>Caption 1</h3>
@@ -285,25 +310,30 @@
                 data-bs-slide="next" style="right: -130px;"></button> -->
         </div>
     </section>
-
+<!-- 
     <section class="services" id="services">
         <h2>Our Services</h2>
         <p>
-            Our platform is designed with your success in mind. 
-            We understand that each student's journey is unique, and that's why we offer a diverse range of opportunities to cater to your individual interests and aspirations. 
-            Whether you're seeking a hands-on internship, a part-time job, or a launchpad for your career, Student Opportunities has you covered.
-             Your growth is our priority, and we're here to help you navigate the path to your professional aspirations.
+            Our platform is designed with your success in mind.
+            We understand that each student's journey is unique, and that's why we offer a diverse range of
+            opportunities to cater to your individual interests and aspirations.
+            Whether you're seeking a hands-on internship, a part-time job, or a launchpad for your career, Student
+            Opportunities has you covered.
+            Your growth is our priority, and we're here to help you navigate the path to your professional aspirations.
         </p>
-    </section>
+    </section> -->
 
-    <section class="contact" id="contact">
+    <!-- <section class="contact" id="contact">
         <h2>Contact Us</h2>
         <p>
-            Student Opportunities is more than just a platform ,it's a community of aspiring individuals driven by the pursuit of excellence. 
-            Our commitment is to provide you with a seamless experience that goes beyond job listings. Connect with like-minded peers, access valuable resources, and gain insights from industry experts. 
-            Your journey towards success is our shared mission. Join us today and embark on a path of growth, learning, and endless possibilities.
+            Student Opportunities is more than just a platform ,it's a community of aspiring individuals driven by the
+            pursuit of excellence.
+            Our commitment is to provide you with a seamless experience that goes beyond job listings. Connect with
+            like-minded peers, access valuable resources, and gain insights from industry experts.
+            Your journey towards success is our shared mission. Join us today and embark on a path of growth, learning,
+            and endless possibilities.
         </p>
-    </section>
+    </section> -->
 
     <footer class=" text-white text-center py-3 mt-4" style="  background-color: #333;">
         <div class="foot">
@@ -313,8 +343,7 @@
                 <a href="/terms">Terms of Service</a> | <a href="/privacy">Privacy Policy</a>
             </div>
             <br>
-            <a href="{{url_for('signup')}}" class="btn btn-light">Register Company</a>
-            <a href="{{url_for('login')}}" class="btn btn-light me-2">Login</a>
+
         </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -322,7 +351,7 @@
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
     <script>
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

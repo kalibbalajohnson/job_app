@@ -189,6 +189,7 @@ def signup():
 def signup1():
     if request.method == "POST":
         details = request.form
+        Fullname = details['fullname']
         Username = details['username']
         Password = details['password']
         email = details['email']
@@ -204,8 +205,8 @@ def signup1():
             return redirect(url_for('signup1'))
 
         # If username does not exist, insert the data
-        cur.execute("INSERT INTO students(username, email, password) VALUES (%s, %s, %s)",
-                    (Username, email, Password))
+        cur.execute("INSERT INTO students(fullname, username, email, password) VALUES (%s, %s, %s, %s)",
+                    ( Fullname, Username, email, Password))
         mysql.connection.commit()
         cur.close()
         flash('User successfully registered!', 'success')
@@ -242,7 +243,7 @@ def company():
     listings_data = cur.fetchall()
 
     cur.close()
-
+   
     return render_template('company.html', cv_submissions=cv_submissions, listings_data=listings_data)
 
 
@@ -293,7 +294,7 @@ def login1():
         user_data1 = cur.fetchone()
         cur.close()
         
-        if user_data1 and user_data1[3] == password:
+        if user_data1 and user_data1[4] == password:
             user = User1(user_data1[0])
             login_user(user)
             flash('Logged in successfully!', 'success')
