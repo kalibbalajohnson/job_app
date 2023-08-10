@@ -123,7 +123,8 @@ class User(UserMixin):
             return None
         
 class User1(UserMixin):
-    
+    def__init__(self,user_id1):
+     self.id1=user_id1
        
 
     @staticmethod
