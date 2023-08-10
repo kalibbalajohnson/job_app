@@ -122,7 +122,7 @@ class User(UserMixin):
         else:
             return None
         
-class User1(UserMixin):
+class User1(UserMixin)
     def __init__(self, user_id1):
         self.id = user_id1
 
