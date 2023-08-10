@@ -106,11 +106,11 @@ login_manager.login_view = 'login'
 
 
 class User(UserMixin):
-   def__init__(self,user_id):
+   def __init__(self,user_id):
         self.id=user_id
 
-    @staticmethod
-    def get(user_id):
+@staticmethod
+def get(user_id):
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
         user_data = cur.fetchone()
@@ -123,12 +123,12 @@ class User(UserMixin):
             return None
         
 class User1(UserMixin):
-    def__init__(self,user_id1):
+ def __init__(self,user_id1):
      self.id1=user_id1
        
 
-    @staticmethod
-    def get(user_id1):
+@staticmethod
+def get(user_id1):
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM students WHERE id = %s", (user_id1,))
         user_data1 = cur.fetchone()
@@ -469,5 +469,5 @@ def search():
 
 
 if __name__ == "__main__":
-   
+   app.run(debug=True)
 
