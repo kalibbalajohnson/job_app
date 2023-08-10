@@ -106,8 +106,8 @@ login_manager.login_view = 'login'
 
 
 class User(UserMixin):
-    def __init__(self, user_id):
-        self.id = user_id
+   def__init__(self,user_id):
+        self.id=user_id
 
     @staticmethod
     def get(user_id):
