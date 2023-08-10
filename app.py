@@ -5,7 +5,7 @@ import os
 from flask_mysqldb import MySQL
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+# from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from collections import Counter
 
