@@ -5,7 +5,7 @@ import os
 from flask_mysqldb import MySQL
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+# from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from collections import Counter
 
@@ -106,11 +106,11 @@ login_manager.login_view = 'login'
 
 
 class User(UserMixin):
-    def __init__(self, user_id):
-        self.id = user_id
+   def __init__(self,user_id):
+        self.id=user_id
 
-    @staticmethod
-    def get(user_id):
+@staticmethod
+def get(user_id):
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM users WHERE id = %s", (user_id,))
         user_data = cur.fetchone()
@@ -123,11 +123,12 @@ class User(UserMixin):
             return None
         
 class User1(UserMixin):
-    def __init__(self, user_id1):
-        self.id = user_id1
+ def __init__(self,user_id1):
+     self.id1=user_id1
+       
 
-    @staticmethod
-    def get(user_id1):
+@staticmethod
+def get(user_id1):
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM students WHERE id = %s", (user_id1,))
         user_data1 = cur.fetchone()
@@ -468,4 +469,5 @@ def search():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+   app.run(debug=True)
+
